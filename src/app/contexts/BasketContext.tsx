@@ -1,36 +1,10 @@
 import Axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import Product from '../../domain/Product';
-import Promotion from '../../domain/Promotion';
+import PromotionRuleFactory from '../../domain/PromotionRule';
 
-async function fetchProduct(code: string): Promise<Product | void> {
-  return Axios.get<Product>(`/products/${code}`)
-    .then(result => result.data)
-    .catch(console.error);
-}
-
-const calculatePromotion = (
-  promotion: Promotion,
-  product: Product,
-  quantity: number
-): number => {
-  switch (promotion.type) {
-    case 'BUY_X_GET_Y_FREE':
-      return (
-        promotion.free_qty! *
-        Math.floor(quantity / promotion.required_qty!) *
-        product.price
-      );
-    case 'FLAT_PERCENT':
-      return Math.floor(product.price * (promotion.amount! / 100));
-    case 'QTY_BASED_PRICE_OVERRIDE':
-      return (
-        Math.floor(quantity / promotion.required_qty!) *
-        (product.price * promotion.required_qty! - promotion.price!)
-      );
-  }
-
-  return 0;
+const fetchProduct = async (code: string): Promise<Product | void> => {
+  return Axios.get<Product>(`/products/${code}`).then(result => result.data);
 };
 
 const calculateDiscounts = (items: BasketItem[]): number => {
@@ -41,12 +15,14 @@ const calculateDiscounts = (items: BasketItem[]): number => {
       return acc;
     }
 
+    const ruleFactory = new PromotionRuleFactory();
+
     return (
       acc +
-      product.promotions.reduce(
-        (sum, promo) => sum + calculatePromotion(promo, product, quantity),
-        0
-      )
+      product.promotions.reduce((sum, promo) => {
+        const rule = ruleFactory.getFor(promo.type);
+        return sum + rule.calculate(promo, product, quantity);
+      }, 0)
     );
   }, 0);
 };
@@ -90,9 +66,7 @@ const BasketContextProvider: React.FC = ({ children }) => {
   });
 
   useEffect(() => {
-    const { items } = state;
-
-    const basketItems = Object.values(items);
+    const basketItems = Object.values(state.items);
 
     const discount = calculateDiscounts(basketItems);
     const price = calculatePrice(basketItems);
@@ -149,7 +123,7 @@ const BasketContextProvider: React.FC = ({ children }) => {
   };
 
   const removeItem = async (code: string) => {
-    // todo
+    // TODO
   };
 
   return (
