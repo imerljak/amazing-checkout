@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import { BasketContextProvider } from './app/contexts/BasketContext';
-import Cart from './app/pages/Cart';
+import Shop from './app/pages/Shop';
 
 function App() {
   return (
     <BasketContextProvider>
-      <Cart />
+      <Shop />
     </BasketContextProvider>
   );
 }
