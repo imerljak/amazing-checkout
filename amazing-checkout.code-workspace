@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "npm-intellisense.importES6": true,
+    "npm-intellisense.importQuotes": "'",
+    "npm-intellisense.importLinebreak": ";\r\n",
+    "npm-intellisense.importDeclarationType": "const",
+    "typescript.suggest.paths": false,
+    "eslint.format.enable": true,
+    "eslint.lintTask.enable": true,
+    "prettier.enable": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
+  }
+}
