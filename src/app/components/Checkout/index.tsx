@@ -1,24 +1,27 @@
 import React from 'react';
 import { useBasket } from '../../contexts/BasketContext';
+import { Card, CardBody, CardHeader } from '../Card/styles';
 import Money from '../Money';
-
-// import { Container } from './styles';
+import { BasketItem } from './styles';
 
 const Checkout: React.FC = () => {
   const { totalPrice, totalDiscount } = useBasket();
 
   return (
-    <div>
-      <p>
-        Raw price: <Money value={totalPrice} />
-      </p>
-      <p>
-        Discounts: <Money value={totalDiscount} />
-      </p>
-      <p>
-        Paypable: <Money value={totalPrice - totalDiscount} />
-      </p>
-    </div>
+    <Card>
+      <CardHeader>Expected Totals</CardHeader>
+      <CardBody>
+        <BasketItem>
+          <p>Raw Price: </p> <Money value={totalPrice} />
+        </BasketItem>
+        <BasketItem>
+          <p>Discounts: </p> <Money value={totalDiscount} />
+        </BasketItem>
+        <BasketItem>
+          <p>Payable: </p> <Money value={totalPrice - totalDiscount} />
+        </BasketItem>
+      </CardBody>
+    </Card>
   );
 };
 

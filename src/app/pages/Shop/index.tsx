@@ -1,19 +1,16 @@
 import React from 'react';
 import Basket from '../../components/Basket';
 import Checkout from '../../components/Checkout';
-
-// import { Container } from './styles';
+import { Container, Content } from './styles';
 
 const Shop: React.FC = () => {
   return (
-    <>
-      <div>
+    <Container>
+      <Content>
         <Basket />
-      </div>
-      <div>
         <Checkout />
-      </div>
-    </>
+      </Content>
+    </Container>
   );
 };
 

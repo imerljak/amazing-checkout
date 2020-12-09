@@ -1,6 +1,5 @@
 import React from 'react';
-
-// import { Container } from './styles';
+import { Container } from './styles';
 
 interface MoneyProps {
   sign?: string;
@@ -9,10 +8,10 @@ interface MoneyProps {
 
 const Money: React.FC<MoneyProps> = ({ sign = '£', value }) => {
   return (
-    <span>
+    <Container>
       {sign}
       {(value / 100).toFixed(2)}
-    </span>
+    </Container>
   );
 };
 
