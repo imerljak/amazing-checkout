@@ -1,42 +1,7 @@
-import Axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
-import Product from '../../domain/Product';
-import PromotionRuleFactory from '../../domain/PromotionRule';
-
-const fetchProduct = async (code: string): Promise<Product | void> => {
-  return Axios.get<Product>(`/products/${code}`).then(result => result.data);
-};
-
-const calculateDiscounts = (items: BasketItem[]): number => {
-  return items.reduce((acc, it) => {
-    const { quantity, product } = it;
-
-    if (!product.promotions || !product.promotions.length) {
-      return acc;
-    }
-
-    const ruleFactory = new PromotionRuleFactory();
-
-    return (
-      acc +
-      product.promotions.reduce((sum, promo) => {
-        const rule = ruleFactory.getFor(promo.type);
-        return sum + rule.calculate(promo, product, quantity);
-      }, 0)
-    );
-  }, 0);
-};
-
-const calculatePrice = (items: BasketItem[]): number => {
-  return items.reduce((acc, it) => acc + it.product.price * it.quantity, 0);
-};
-
-// ========================
-
-interface BasketItem {
-  quantity: number;
-  product: Product;
-}
+import BasketItem from '../../domain/BasketItem';
+import PriceService from '../services/Price';
+import ProductService from '../services/Products';
 
 interface BasketContextState {
   items: {
@@ -68,8 +33,8 @@ const BasketContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const basketItems = Object.values(state.items);
 
-    const discount = calculateDiscounts(basketItems);
-    const price = calculatePrice(basketItems);
+    const discount = PriceService.calculateDiscounts(basketItems);
+    const price = PriceService.calculatePrice(basketItems);
 
     setState(s => ({
       ...s,
@@ -83,7 +48,7 @@ const BasketContextProvider: React.FC = ({ children }) => {
       return;
     }
 
-    const product = await fetchProduct(code);
+    const product = await ProductService.fetch(code);
 
     if (product) {
       setState(s => ({
