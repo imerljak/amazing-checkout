@@ -19,6 +19,7 @@
       "source.fixAll": true,
       "source.organizeImports": true
     },
+    "eslint.workingDirectories": ["/client"],
     "typescript.tsdk": "node_modules/typescript/lib"
   }
 }
