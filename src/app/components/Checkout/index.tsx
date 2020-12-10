@@ -20,12 +20,16 @@ const Checkout: React.FC = () => {
     card.trim().length > 0 &&
     cvv.trim().length > 0;
 
+  const handleHolderInput = (value: string) => {
+    setHolder(value.replace(/[^a-zA-Z\s]/, '').toLocaleUpperCase());
+  };
+
   const handleCardInput = (value: string) => {
-    setCard(value);
+    setCard(value.replace(/[^0-9]/, '').substr(0, 16));
   };
 
   const handleCvvInput = (value: string) => {
-    setCvv(value);
+    setCvv(value.replace(/[^0-9]/, '').substr(0, 3));
   };
 
   const clearInputs = () => {
@@ -37,8 +41,8 @@ const Checkout: React.FC = () => {
   const handleCheckoutRequest = async () => {
     const result = await doCheckout(holder, card, cvv);
     if (result) {
+      alert(`Thank you for your purchase ${holder}!`);
       clearInputs();
-      alert('Thank you for your purchase!');
     } else {
       alert(
         'Something has gone wrong and we couldn`t process your payment. (Theres a 50% chance that this will work, please try again)'
@@ -53,7 +57,7 @@ const Checkout: React.FC = () => {
         <CheckoutInput
           placeholder='Card Holder'
           value={holder}
-          onChange={e => setHolder(e.target.value)}
+          onChange={e => handleHolderInput(e.target.value)}
         />
         <CardInfoWrapper>
           <CheckoutInput
