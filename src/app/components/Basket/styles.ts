@@ -40,6 +40,8 @@ export const CodeSubmit = styled.button`
   background-color: #222;
   color: #eee;
 
+  cursor: pointer;
+
   transition: background-color 0.1s ease-in;
 
   &:active {

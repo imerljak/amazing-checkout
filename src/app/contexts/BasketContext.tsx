@@ -17,6 +17,7 @@ interface BasketContextProps {
   totalDiscount: number;
   addItem: (code: string) => Promise<boolean>;
   removeItem: (code: string) => Promise<boolean>;
+  doCheckout: (holder: string, card: string, cvv: string) => Promise<boolean>;
 }
 
 const BasketContext = createContext<BasketContextProps>(
@@ -100,6 +101,26 @@ const BasketContextProvider: React.FC = ({ children }) => {
     return false;
   };
 
+  const doCheckout = async (
+    holder: string,
+    card: string,
+    cvv: string
+  ): Promise<boolean> => {
+    // Do magic here to process payment and if successfull clear basket data.
+
+    const rand = Math.random();
+
+    if (rand >= 0.5) {
+      setState(c => ({
+        ...c,
+        items: {},
+      }));
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <BasketContext.Provider
       value={{
@@ -108,6 +129,7 @@ const BasketContextProvider: React.FC = ({ children }) => {
         totalDiscount: state.totalDiscount,
         addItem,
         removeItem,
+        doCheckout,
       }}>
       {children}
     </BasketContext.Provider>

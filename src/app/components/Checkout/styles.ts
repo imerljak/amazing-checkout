@@ -43,7 +43,17 @@ export const CheckoutConfirmButton = styled.button`
   background-color: #222;
   color: #eee;
 
+  cursor: pointer;
+
   transition: background-color 0.1s ease-in;
+
+  &:disabled {
+    opacity: 0.5;
+
+    &:active {
+      background-color: #222;
+    }
+  }
 
   &:active {
     background-color: #333;
