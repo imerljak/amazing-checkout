@@ -1,6 +1,7 @@
 import React from 'react';
 import Basket from '../../components/Basket';
 import Checkout from '../../components/Checkout';
+import Totals from '../../components/Totals';
 import { Container, Content } from './styles';
 
 const Shop: React.FC = () => {
@@ -8,6 +9,7 @@ const Shop: React.FC = () => {
     <Container>
       <Content>
         <Basket />
+        <Totals />
         <Checkout />
       </Content>
     </Container>

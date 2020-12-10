@@ -49,8 +49,10 @@ const Basket: React.FC = () => {
       </CardBody>
       <CardFooter>
         <CodeInput
+          autoFocus
           type='text'
           value={code}
+          placeholder='Product Code'
           onKeyDown={e => handleKeyDown(e)}
           onChange={e => setCode(e.target.value)}
         />

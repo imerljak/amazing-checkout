@@ -3,12 +3,11 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: grid;
   grid-gap: 0.5rem;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template: 'a b c';
   padding: 0.5rem;
   border: 1px solid #333;
   border-radius: 0.3rem;
   align-self: stretch;
-
   margin-top: 0.5rem;
 `;
 

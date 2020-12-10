@@ -18,7 +18,7 @@ const BasketListItem: React.FC<BasketListItemProps> = ({
       <ItemAmount>{amount}x</ItemAmount>
       <ItemName>{product}</ItemName>
       <ItemPrice>
-        <Money value={price} />
+        <Money value={price * amount} />
       </ItemPrice>
     </Container>
   );
