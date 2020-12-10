@@ -15,8 +15,8 @@ interface BasketContextProps {
   items: BasketItem[];
   totalPrice: number;
   totalDiscount: number;
-  addItem: (code: string) => Promise<void>;
-  removeItem: (code: string) => Promise<void>;
+  addItem: (code: string) => Promise<boolean>;
+  removeItem: (code: string) => Promise<boolean>;
 }
 
 const BasketContext = createContext<BasketContextProps>(
@@ -43,25 +43,32 @@ const BasketContextProvider: React.FC = ({ children }) => {
     }));
   }, [state.items]);
 
-  const addNewProduct = async (code: string) => {
+  const addNewProduct = async (code: string): Promise<boolean> => {
     if (!code || code.trim() === '') {
-      return;
+      return false;
     }
 
-    const product = await ProductService.fetch(code);
+    try {
+      const product = await ProductService.fetch(code);
 
-    if (product) {
-      setState(s => ({
-        ...s,
-        items: {
-          ...s.items,
-          [code]: {
-            quantity: 1,
-            product,
+      if (product) {
+        setState(s => ({
+          ...s,
+          items: {
+            ...s.items,
+            [code]: {
+              quantity: 1,
+              product,
+            },
           },
-        },
-      }));
+        }));
+
+        return true;
+      }
+    } catch (e) {
+      console.error(e);
     }
+    return false;
   };
 
   const incrementExistingProduct = async (code: string) => {
@@ -77,18 +84,20 @@ const BasketContextProvider: React.FC = ({ children }) => {
     }));
   };
 
-  const addItem = async (code: string) => {
+  const addItem = async (code: string): Promise<boolean> => {
     const { items } = state;
 
     if (!items[code]) {
       return addNewProduct(code);
     }
 
-    return incrementExistingProduct(code);
+    await incrementExistingProduct(code);
+    return true;
   };
 
-  const removeItem = async (code: string) => {
+  const removeItem = async (code: string): Promise<boolean> => {
     // TODO
+    return false;
   };
 
   return (

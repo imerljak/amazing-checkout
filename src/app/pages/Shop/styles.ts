@@ -5,7 +5,6 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   height: 90%;
-
   @media (max-width: 767px) {
     padding: 1rem;
   }
@@ -15,10 +14,23 @@ export const Content = styled.div`
   display: grid;
   flex-grow: 1;
   grid-template-rows: 4fr 1fr;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas:
+    'b c'
+    'b c';
   grid-gap: 1rem;
-  max-width: 800px;
   @media (max-width: 767px) {
-    max-width: 100%;
+    grid-template-areas:
+      'b'
+      'c';
+  }
+
+  & div:first-child: {
+    grid-area: 'b';
+  }
+
+  & div:last-child: {
+    grid-area: 'c';
   }
 `;
 
