@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  app-server:
+    build:
+      context: server
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - backend
+      - frontend
+
+  app-client:
+    build:
+      context: client
+    ports:
+      - "9090:80"
+    restart: always
+    depends_on:
+      - app-server
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:
