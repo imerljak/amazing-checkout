@@ -32,5 +32,31 @@
     },
     "eslint.workingDirectories": ["/client"],
     "typescript.tsdk": "client/node_modules/typescript/lib"
+  },
+  "launch": {
+    "configurations": [
+      {
+        "type": "java",
+        "name": "Launch Server",
+        "request": "launch",
+        "mainClass": "com.ezdevs.amazingcheckout.AmazingCheckoutApplication"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Client",
+        "runtimeExecutable": "yarn",
+        "cwd": "${workspaceFolder}/client",
+        "runtimeArgs": ["start"],
+        "skipFiles": ["<node_internals>/**"],
+        "port": 3000
+      }
+    ],
+    "compounds": [
+      {
+        "name": "Launch API and Frontend",
+        "configurations": ["Launch Server", "Launch Client"]
+      }
+    ]
   }
 }
