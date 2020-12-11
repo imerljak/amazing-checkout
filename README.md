@@ -2,8 +2,8 @@
 A simple app that simulates a checkout system for a supermaket that resolves basket price calculation and discount handling with varying promotion configurations.
 
 ### Architecture
-+ Frontend client developed with ReactJS 
-+ Backend API with SpringBoot+WebFlux
++ Frontend client developed with [ReactJS](https://reactjs.org) 
++ Backend API with [SpringBoot+WebFlux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html)
 
 ### Assumptions
 Since the propostal of the app is to be used in a market as a checkout system, the UI expects to receive as input the product code and will list it (if it exists) with its price and quantity while demonstrating the full puchase price and applicable discounts in the same screen.
